@@ -1,3 +1,13 @@
+// nota 9 (nueve)
+//test: todos andan y están muy bien
+//1) MB- algunas duplicaciones minimas. Usa prenda como elementos de los pares lo que hace que herede cosas innecesariamente
+//2) MB
+//3) MB- falla las livianas
+//4) B+ Hay algún problema de delegación.
+//5) MB
+//6) MB- debería delegar en la prenda para saber la calidad
+//7) MB
+//8) MB- queda duplicado el desgasstar de liviana y pesada
 
 
 //Esta clase no debe existir, 
@@ -16,7 +26,7 @@
 //}
 
 class Prenda{
-	const property talle=null;
+	const property talle=null; 
 	var abrigo=1;
 	var property desgaste=0;
 	
@@ -35,10 +45,10 @@ class Prenda{
 	method nivelAbrigo(){
 		return abrigo
 	}
-	
+	//TODO: el metodo desgastar podŕia estar en este punto, ya que hiciste que se maneje la variable acá
 
 }
-
+		//Se soluciona evitando el uso de la variable en la superclase
 class PrendaDePares inherits Prenda{
 
 	var property izquierdo;
@@ -49,10 +59,12 @@ class PrendaDePares inherits Prenda{
 	}
 	
 	method puntosEdad(ninio){
+		//TODO: HAbía que cambira acá también para usar el método de ninio que te dice si es menor o no
 		return if(ninio.edad()<4) 1 else 0
 	}
 	
 	override method puntosDesgaste(){
+		//TODO: queda duplicado el máximo de 3 con respecto a la superclase.
 		return if(self.desgastePromedio()>=3) 3 else self.desgastePromedio()
 	}
 
@@ -91,11 +103,12 @@ class PrendaLiviana inherits Prenda{
 	override method nivelAbrigo(){
 		 return abrigo
 	}
-	
+	//TODO El nivel de abrigo de las prendas livianas se tiene que delegar en un único objeto
 	method nivelAbrigo(_abrigo){
 		 abrigo=_abrigo
 	}
 	
+	//TODO: Este metodo te quedó duplicado en prenda Pesada
 	method desgastar(){
 		desgaste++
 	}
@@ -124,6 +137,9 @@ class Ninio{
 	}
 	
 	method prendasDeCalidad(){
+		//TODO: Delegar la calidad a la prenda
+		//Ademas no cumple bien el requerimiento, porque se pide el promedio sea superior a 8
+		//y acá estas verficando que todas tengan como minimo 8
 		return prendas.all({prenda=>prenda.nivelAbrigo()+prenda.comodidad(self)>=8})
 	}
 	
@@ -132,6 +148,7 @@ class Ninio{
 	}
 	
 	method infaltable(){
+		//TODO: delegar en la prenda para saber la calidad
 		return prendas.max({prenda=>prenda.nivelAbrigo()+prenda.comodidad(self)})
 	}
 	
@@ -148,11 +165,13 @@ class Ninio{
 class NinioProblematico inherits Ninio{
 	var juguete;
 	
+	//TODO: mejor solo sobreescribir un metodo que devuelva el minimo necesario (4 o 5)
 	override method cantidadPrendas(){
 		return prendas.size()>=4
 	}
 	
 	method jugueteApto(){
+		//TODO: mas facil usar between
 		return edad>juguete.min() and edad<juguete.max()
 	}
 	
